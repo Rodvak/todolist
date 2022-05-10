@@ -1,23 +1,39 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
+import Display from './components/Display';
+import TodoForm from './components/TodoForm';
 
 function App() {
+
+  const [tasks, setTasks] = useState([]);
+
+  const handleAdd = (newTask) => {
+    setTasks([...tasks, newTask])
+  }
+
+  const handleCheck = (index) => {
+    const newTasks = tasks.map((task,i) => {if (index === i) { 
+      
+      return {...task, checked: !task.checked}
+    }else {
+      return task
+    }})
+    setTasks(newTasks)
+  }
+
+  const handleDelete = (index) => {
+    const newTasks = tasks.filter((task,i) => {
+      if (index !== i) {
+        return task
+      }
+    })
+    setTasks(newTasks)
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <TodoForm handleAdd = {handleAdd}/>
+      <Display tasks = {tasks} handleCheck = {handleCheck} handleDelete = {handleDelete}/>
     </div>
   );
 }
