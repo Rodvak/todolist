@@ -24,8 +24,8 @@ function App() {
   const handleDelete = (index) => {
     const newTasks = tasks.filter((task,i) => {
       if (index !== i) {
-        return task
       }
+      return task
     })
     setTasks(newTasks)
   }
